@@ -1,0 +1,6 @@
+ItemID,ItemName,Stock,ReorderLevel,UnitCost
+101,Bearing,50,20,120
+102,Shaft,25,15,350
+103,Gear,75,30,500
+104,Axle,40,15,800
+105,Bolt,200,50,10
