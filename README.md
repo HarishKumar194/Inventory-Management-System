@@ -64,7 +64,7 @@ python app.py
 - Real-time inventory updates  
 
 ---
-
+![Output](Screenshot%202026-06-14%20132804.png)
 ## Author
 
 Harish Kumar
