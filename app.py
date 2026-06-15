@@ -122,6 +122,42 @@ def low_stock_items():
         print("\n===== LOW STOCK ITEMS =====")
         print(low_stock.to_string(index=False))
 
+def reorder_point_report():
+
+    print("\n===== REORDER POINT REPORT =====")
+
+    for _, item in inventory.iterrows():
+
+        item_id = item["ItemID"]
+
+        sales_row = sales[sales["ItemID"] == item_id]
+
+        if sales_row.empty:
+            continue
+
+        sales_values = sales_row.iloc[0, 1:].tolist()
+
+        avg_monthly_demand = sum(sales_values) / len(sales_values)
+
+        avg_daily_demand = avg_monthly_demand / 30
+
+        lead_time = item["LeadTime"]
+
+        safety_stock = item["SafetyStock"]
+
+        reorder_point = (
+            avg_daily_demand * lead_time
+        ) + safety_stock
+
+        print(f"\nItem: {item['ItemName']}")
+        print(f"Current Stock: {item['Stock']}")
+        print(f"Reorder Point: {reorder_point:.2f}")
+
+        if item["Stock"] <= reorder_point:
+            print("REORDER REQUIRED")
+        else:
+            print("Stock Sufficient")
+
 
 while True:
 
@@ -137,7 +173,8 @@ while True:
     print("5. Calculate EOQ")
     print("6. Inventory Value")
     print("7. Low Stock Report")
-    print("8. Exit")
+    print("8. Reorder Point Report")
+    print("9. Exit")
 
     choice = input("\nEnter Choice: ")
 
@@ -163,6 +200,9 @@ while True:
         low_stock_items()
 
     elif choice == "8":
+        reorder_point_report()
+
+    elif choice == "9":
         print("Exiting...")
         break
 
